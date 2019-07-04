@@ -1,0 +1,103 @@
+package fanshe;
+
+import java.util.Iterator;
+
+public class suan {
+	private static void shu(int[] a){
+		System.out.print("[");
+		for (int i = 0; i < a.length; i++) {
+			if(i == a.length-1){
+				System.out.println(a[i]+"]");
+			}else {
+				System.out.print(a[i] + ", ");
+			}
+		}
+	}
+	private static void mao(int[] a){//冒泡排序
+		for (int i = 0; i < a.length-1; i++) {
+			for (int j = 0; j < a.length-1-i; j++) {
+				if (a[j] > a[j + 1]) {
+					int t = a[j];
+					a[j] = a[j+1];
+					a[j+1] = t;
+				}
+			}
+		}
+	}
+	private static void sort(int[] a){//选择排序
+		for (int i = 0; i < a.length-1; i++) {
+			for (int j = i+1; j < a.length; j++) {
+				if(a[i] > a[j]){
+					int t = a[i];
+					a[i] = a[j];
+					a[j] = t;
+				}
+			}
+		}
+	}
+	private static int bisection(int[] array,int target){
+		int start = 0;
+		int end = array.length;
+		int i = (start+end)/2;
+		if (target < array[0]) {
+			return -1;
+		}
+		if (target > array[end-1]) {
+			return -1;
+		}
+		while (target != array[i]) {
+			if (target > array[i]) {
+				start = i;
+			}
+			if (target < array[i]) {
+				end = i;
+			}
+			i = (start + end)/2;
+		}
+		return i;
+	}
+	public static int column2row(String s){
+		if (s == null) {
+			return -1;
+		}
+		String s1 = s.toUpperCase();
+		if (!s1.matches("[A-Z]+")) {
+			return -1;
+		}
+		int num = 0;
+		long b = 1;
+		for(int i = s1.length()-1; i >=0 ;i--){
+			char c = s1.charAt(i);
+			num += (c - 'A' +1) * b;
+			b *= 26;
+		}
+		return num;
+	}
+	public static String row2column(int a){
+		if (a<0) {
+			return null;
+		}
+		StringBuffer sb = new StringBuffer();
+		while (a > 0) {
+			--a;
+			int mod = a % 26; 
+	        sb.append((char) (mod + 'A')); 
+	        a = (a - mod) / 26;
+		}
+		return sb.reverse().toString();
+	}
+	public static void main(String[] args) {
+		int[] array = {5,99,2,1,33,57,6};
+		System.out.println("排序前:");
+		shu(array);
+		System.out.println("排序后");
+		sort(array);
+	    shu(array);
+	    System.out.println("二分查找");
+	    bisection(array, 6);
+	    System.out.println("行转换为列");
+	    column2row("AA");
+	    System.out.println("列转换为行");
+	    row2column(11);
+	}
+}
